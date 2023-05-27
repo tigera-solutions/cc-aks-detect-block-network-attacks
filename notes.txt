@@ -1,0 +1,30 @@
+Script
+
+### Review and customize security guardrails for network-based threats
+
+Review the policies 
+ - Talk about the DNS policy in the security tier
+
+Create policies for the vote application
+- create the default-deny staged
+- create a policy for db manually
+- create all other policies using recommend policy.
+
+Test access from redis to nginx-svc (wget)
+
+- enforce default-deny
+
+Test again.
+
+
+
+### Configure IDS/IPS, workload-centric WAF, and DDoS protection
+### Detect zero-day attacks based on suspicious container activity using syscalls, file access, and process information 
+### Preview and enforce security policies to quarantine infected workloads
+### Visualize security posture of your Kubernetes cluster 
+
+admin
+23@IC1q$SMGc%v8N)5
+
+
+0gyn@JYM

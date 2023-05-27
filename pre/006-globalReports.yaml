@@ -39,7 +39,6 @@ spec:
   endpoints:
     serviceAccounts:
       names: 
-        - regis
         - default
     namespaces:
       names:

@@ -1,0 +1,160 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-pass
+  namespace: dev
+type: Opaque
+data:
+  password: VGlnZXJhQDEyMw==
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client
+  labels:
+    app: client
+  namespace: dev
+spec:
+  containers:
+  - name: netshoot
+    image: nicolaka/netshoot:latest
+    command: [ "/bin/bash", "-c"]
+    args: [ "while true; do curl -m3 http://webapp; sleep 3; done;" ]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-mysql
+  labels:
+    app: webapp
+  namespace: dev
+spec:
+  type: ClusterIP
+  ports:
+  - name: "db-mysql-service"
+    port: 3306
+    targetPort: 3306
+  selector:
+    app: db
+    tier: mysql
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-mysql
+  labels:
+    app: db
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app: db
+      tier: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: db
+        tier: mysql
+    spec:
+      containers:
+      - image: mysql:5.6
+        name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: password
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-storage
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-external
+  labels:
+    app: webapp
+  namespace: dev
+spec:
+  ports:
+  - name: "webapp-service"
+    port: 80
+    targetPort: 80
+  selector:
+    app: webapp
+    tier: frontend
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp
+  labels:
+    app: webapp
+  namespace: dev
+spec:
+  ports:
+  - name: "webapp-service"
+    port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: webapp
+    tier: frontend
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp
+  labels:
+    app: webapp
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app: webapp
+      tier: frontend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: webapp
+        tier: frontend
+    spec:
+      containers:
+      - image: wordpress:4.8-apache
+        name: wordpress
+        env:
+        - name: WORDPRESS_DB_HOST
+          value: db-mysql
+        - name: WORDPRESS_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: password
+        ports:
+        - containerPort: 80
+          name: webapp
+        volumeMounts:
+        - name: webapp-storage
+          mountPath: /var/www/html
+      volumes:
+      - name: webapp-storage
+        emptyDir: {}

@@ -1,4 +1,4 @@
-# Microsoft Azure: Hands-on AKS workshop </br> Detect and Block Container and Network-Based Attacks in AKS
+# Microsoft Azure: Hands-on AKS workshop </br> Detect and Block Container and Network-Based Attacks
 
 In this AKS-focused workshop, you will work with Microsoft Azure and Calico Cloud to learn how to design and deploy best practices to secure your Kubernetes environment, detecting and blocking container and network-based attacks. This 90-minute hands-on lab will guide you from building an AKS cluster, creating a Calico Cloud trial account and registering your AKS cluster to Calico Cloud for configuring and securing it for protection. A sample application environment is designed to help you to learn how to:
 
