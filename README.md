@@ -2,7 +2,7 @@
 
 ## Welcome
 
-In this AKS-focused workshop, you will work with Microsoft Azure and Calico Cloud to learn how implement zero-trust security for workloads to reduce the attack surface of applications running on AKS.  
+In this AKS-focused workshop, you will work with Microsoft Azure and Calico Cloud to learn how to design and deploy best practices to secure your Kubernetes environment, detecting and blocking container and network-based attacks.
 
 Cloud-native applications require a modern approach based on the zero-trust principles of identity-based access, least privilege access, and proactively detecting threats and reducing the blast radius in case of a breach.
 
@@ -24,10 +24,11 @@ The estimated time to complete this workshop is 60-90 minutes.
 
 ### Learning Objectives
 
-1. Learn how to deploy zero-trust workload access controls
-2. Extend firewall protection at the granular, workload level
-3. Block lateral movement of APTs with identity-aware microsegmentation
-4. Understand how to apply zero-trust security controls at application level.
+1. Review and customize security guardrails for network-based threats
+2. Configure IDS/IPS, workload-centric WAF, and DDoS protection
+3. Detect zero-day attacks based on suspicious container activity using syscalls, file access, and process information 
+4. Preview and enforce security policies to quarantine infected workloads
+5. Visualize security posture of your Kubernetes cluster 
 
 ## Modules
 
@@ -36,11 +37,12 @@ This workshop is organized in sequential modules. One module will build up on to
 Module 1 - [Getting Started](/modules/module-1-getting-started.md)  
 Module 2 - [Deploy an Azure AKS cluster](/modules/module-2-deploy-aks.md)  
 Module 3 - [Connect the Azure AKS cluster to Calico Cloud](/modules/module-3-connect-calicocloud.md)  
-Module 4 - [Zero-Trust Workload Access Control](/modules/module-4-workload-access-control.md)  
+Module 4 - [Security Guardrails for Network-based Threats](/modules/module-4-security-guardrails.md)  
 Module 5 - [Identity-aware Microsegmentation](/modules/module-5-identity-aware-microsegmentation.md)  
-Module 6 - [Ingress and Egress access control using NetworkSets](/modules/module-6-network-sets.md)   
-Module 7 - [Application Level Observability](/modules/module-7-application-observability.md)    
-Module 8 - [Clean up](/modules/module-8-clean-up.md)  
+Module 6 - [Configuring IDS protection ans Workload-Centric WAF](/modules/module-6-ids-waf.md)  
+Module 7 - [Detect Zero-Day Attacks with Threat Defence](/modules/module-7-threat-defence.md) 
+Module 8 - [Quarantine Infected Workloads and KSPM](/modules/module-8-quarantine-kspm.md)  
+Module 9 - [Clean up](/modules/module-9-clean-up.md)  
 
 --- 
 

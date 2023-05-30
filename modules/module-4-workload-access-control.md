@@ -1,4 +1,4 @@
-# Module 4 - Zero Trust Workload Access Control
+# Module 4 - Security Guardrails for Network-based Threats
 
 Calico provides methods to enable fine-grained access controls between your microservices and external databases, cloud services, APIs, and other applications that are protected behind a firewall. You can enforce controls from within the cluster using DNS egress policies, from a firewall outside the cluster using the egress gateway. Controls are applied on a fine-grained, per-pod basis.
 
@@ -10,6 +10,12 @@ In this module, we will learn how to use Calico to create network policies to co
    ```
    kubectl apply -f pre
    ```
+
+Included in the `pre` folder are two applications that will be used for the exercises in this workshop. The diagram below shows how the elements of each application communicate between themselves.
+
+<<< IMAGE HERE >>>
+
+There are also other objects that will be created for the workshop. We will lear about them later in the workshop.
 
    > **Note**: Wait until all the pods are up and running to move to the next step.
 

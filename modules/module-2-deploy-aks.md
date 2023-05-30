@@ -7,8 +7,8 @@
    > source ~/workshopvars.env
 
    ```bash
-   export RESOURCE_GROUP=rg-zero-trust-workshop
-   export CLUSTERNAME=aks-zero-trust-workshop
+   export RESOURCE_GROUP=rg-security-workshop
+   export CLUSTERNAME=aks-security-workshop
    export LOCATION=canadacentral
    # Persist for later sessions in case of disconnection.
    echo export RESOURCE_GROUP=$RESOURCE_GROUP >> ~/workshopvars.env
@@ -30,11 +30,11 @@
    az aks create \
      --resource-group $RESOURCE_GROUP \
      --name $CLUSTERNAME \
-     --kubernetes-version 1.23 \
+     --kubernetes-version 1.25 \
      --location $LOCATION \
      --node-count 2 \
-     --node-vm-size Standard_B2ms \
-     --max-pods 100 \
+     --node-vm-size Standard_B4ms \
+     --max-pods 120 \
      --generate-ssh-keys \
      --network-plugin azure
    ```
@@ -54,7 +54,7 @@
    <pre>
    Name                     Location       ResourceGroup              KubernetesVersion    CurrentKubernetesVersion    ProvisioningState    Fqdn
    -----------------------  -------------  -------------------------  -------------------  --------------------------  -------------------  -----------------------------------------------------------------------
-   aks-zero-trust-workshop  canadacentral  rg-zero-trust-workshop     1.23                 1.23.12                     Succeeded            aks-zero-t-rg-zero-trust-wo-03cfb8-b3feb0f8.hcp.canadacentral.azmk8s.io
+   aks-security-workshop  canadacentral  rg-security-workshop     1.25                 1.25.6                      Succeeded            aks-securi-rg-security-wo-03cfb8-b3feb0f8.hcp.canadacentral.azmk8s.io
    </pre>
 
 5. Get the credentials to connect to the cluster.
@@ -73,8 +73,8 @@
 
    <pre>
    NAME                                STATUS   ROLES   AGE   VERSION
-   aks-nodepool1-10832039-vmss000000   Ready    agent   18h   v1.23.12
-   aks-nodepool1-10832039-vmss000002   Ready    agent   74m   v1.23.12
+   aks-nodepool1-24181868-vmss000000   Ready    agent   4h50m   v1.25.6
+   aks-nodepool1-24181868-vmss000001   Ready    agent   4h50m   v1.25.6
    </pre>
 
    To see more details about your cluster:
@@ -85,9 +85,9 @@
 
    The output will ne something similar to the this:
    <pre>
-   Kubernetes control plane is running at https://aks-zero-t-rg-zero-trust-wo-03cfb8-b3feb0f8.hcp.canadacentral.azmk8s.io:443
-   CoreDNS is running at https://aks-zero-t-rg-zero-trust-wo-03cfb8-b3feb0f8.hcp.canadacentral.azmk8s.io:443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
-   Metrics-server is running at https://aks-zero-t-rg-zero-trust-wo-03cfb8-b3feb0f8.hcp.canadacentral.azmk8s.io:443/api/v1/namespaces/kube-system/services/https:metrics-server:/proxy
+   Kubernetes control plane is running at https://aks-securi-rg-security-wo-03cfb8-b3feb0f8.hcp.canadacentral.azmk8s.io:443
+   CoreDNS is running at https://aks-securi-rg-security-wo-03cfb8-b3feb0f8.hcp.canadacentral.azmk8s.io:443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+   Metrics-server is running at https://aks-securi-rg-security-wo-03cfb8-b3feb0f8.hcp.canadacentral.azmk8s.io:443/api/v1/namespaces/kube-system/services/https:metrics-server:/proxy
 
    To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
    </pre>
