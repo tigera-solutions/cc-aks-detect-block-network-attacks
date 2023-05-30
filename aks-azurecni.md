@@ -3,7 +3,7 @@
 1. Define the environment variables to be used by the resources definition.
 
    ```bash
-   export RESOURCE_GROUP=compliance-workshop
+   export RESOURCE_GROUP=security-workshop
    export CLUSTER_NAME=aks-workshop-cluster
    export LOCATION=canadacentral
    ```

@@ -4,7 +4,7 @@ metadata:
   name: security.allow-kube-dns
 spec:
   tier: security
-  order: 10
+  order: 200
   selector: all()
   types:
   - Egress    
@@ -16,6 +16,14 @@ spec:
         selector: k8s-app == "kube-dns"
         ports:
         - '53'
+    - action: Allow
+      protocol: TCP
+      source: {}
+      destination:
+        selector: k8s-app == "kube-dns"
+        ports:
+        - '53'
+    - action: Pass
 ---
 apiVersion: projectcalico.org/v3
 kind: GlobalNetworkPolicy
