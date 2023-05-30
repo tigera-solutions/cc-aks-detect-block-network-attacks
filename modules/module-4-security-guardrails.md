@@ -11,10 +11,9 @@ In this module, we will learn how to use Calico to create network policies to co
    kubectl apply -f pre
    ```
 
-Included in the `pre` folder are two applications that will be used for the exercises in this workshop. The diagram below shows how the elements of each application communicate between themselves.
+Included in the `pre` there folder are two applications that will be used in the exercises during the workshop. The diagram below shows how the elements of each application communicate between themselves.
 
 ![applications](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/842088b1-320c-4ada-8905-10d1dd02c57c)
-
 
 There are also other objects that will be created for the workshop. We will lear about them later in the workshop.
 
@@ -30,9 +29,9 @@ Connect to Calico Cloud GUI. From the menu select `Service Graph > Flow Visualiz
 
 ![flow-visualization](https://user-images.githubusercontent.com/104035488/192358472-112c832f-2fd7-4294-b8cc-fec166a9b11e.gif)
 
-## Network Security Policies
+## Security Policies
 
-Calico Security Policies provide a richer set of policy capabilities than Kubernetes network policies including:  
+Calico Security Policies provide a richer set of policy capabilities than the native Kubernetes network policies, including:  
 
 - Policies that can be applied to any kind of endpoint: pods/containers, VMs, and/or to host interfaces
 - Policies that can define rules that apply to ingress, egress, or both
@@ -54,6 +53,37 @@ Calico Security Policies provide a richer set of policy capabilities than Kubern
 A global default deny policy ensures that unwanted traffic (ingress and egress) is denied by default. Pods without policy (or incorrect policy) are not allowed traffic until appropriate network policy is defined. Although the staging policy tool will help you find incorrect and missing policy, a global deny helps mitigate against other lateral malicious attacks.
 
 By default, all traffic is allowed between the pods in a cluster. Let's start by testing connectivity between application components and across application stacks. All of these tests should succeed as there are no policies in place.
+
+We recommend that you create a global default deny policy after you complete writing policy for the traffic that you want to allow. Use the stage policy feature to get your allowed traffic working as expected, then lock down the cluster to block unwanted traffic.
+
+1. Create a staged global default deny policy. It will shows all the traffic that would be blocked if it were converted into a deny.
+
+   - Go to the `Policies Board`
+   - On the bottom of the tier box `default` click on `Add Policy`
+     - In the `Create Policy` page enter the policy name: `default-deny`
+     - On the `Applies To` session, click `Add Namespace Seletor`
+       First, lets apply only to the `vote` namespace
+       - Select Key... `kubernetes.io/metadata.name`
+       - =
+       - Select Value... `vote`
+     - On the field `Type` select both checkboxes: Ingress and Egress.
+     - You are done. Click `Stage` on the top-right of your page.
+
+   The staged policy does not affect the traffic directly but allows you to view the policy impact if it were to be enforced. You can see the deny traffic in staged policy.
+
+2. Based on the application design, the `db` lists on port `5432` and receive connections from the `worker` and the `result` microservices. 
+   Let's use the Calico Cloud UI to create a policy to microsegment this traffic.
+
+   
+
+
+
+
+
+
+
+
+
 
 First, let's install `curl` in the loadgenerator pod for these tests.
 
