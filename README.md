@@ -40,7 +40,7 @@ Module 3 - [Connect the Azure AKS cluster to Calico Cloud](/modules/module-3-con
 Module 4 - [Security Guardrails for Network-based Threats](/modules/module-4-security-guardrails.md)  
 Module 5 - [Identity-aware Microsegmentation](/modules/module-5-identity-aware-microsegmentation.md)  
 Module 6 - [Configuring IDS protection ans Workload-Centric WAF](/modules/module-6-ids-waf.md)  
-Module 7 - [Detect Zero-Day Attacks with Threat Defence](/modules/module-7-threat-defence.md) 
+Module 7 - [Detect Zero-Day Attacks with Threat Defence](/modules/module-7-threat-defence.md)  
 Module 8 - [Quarantine Infected Workloads and KSPM](/modules/module-8-quarantine-kspm.md)  
 Module 9 - [Clean up](/modules/module-9-clean-up.md)  
 
