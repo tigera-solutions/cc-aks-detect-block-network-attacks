@@ -37,10 +37,9 @@ spec:
   reportType: policy-audit
   schedule:  '*/30 * * * *'
   endpoints:
-    serviceAccounts:
-      names: 
-        - default
+    serviceAccounts: {}
     namespaces:
       names:
-        - dev
+        - vote
+        - wordpress
         - default
