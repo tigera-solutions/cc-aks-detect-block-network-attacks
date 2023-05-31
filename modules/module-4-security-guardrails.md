@@ -137,9 +137,9 @@ We recommend creating a global default deny policy after you complete writing po
 
 ### Bonus - About Tiers
 
-Tiers are a hierarchical construct used to group policies and enforce higher precedence policies that other teams cannot circumvent, providing the basis for **Identity-aware microsegmentation**. 
+Tiers are a hierarchical construct used to group policies and enforce higher precedence policies that other teams cannot circumvent, providing the basis for **Identity-aware micro-segmentation**. 
 
-All Calico and Kubernetes security policies reside in tiers. You can start “thinking in tiers” by grouping your teams and the types of policies within each group such as security, platform, etc.
+All Calico and Kubernetes security policies reside in tiers. You can start “thinking in tiers” by grouping your teams and the types of policies within each group, such as security, platform, etc.
 
 Policies are processed in sequential order from top to bottom.
 
