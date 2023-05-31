@@ -133,7 +133,7 @@ We recommend creating a global default deny policy after you complete writing po
 
    Great! You just created a recommended policy. Easy, right? Now go ahead and create policies for all the other workloads in the vote namespace.
 
-4. If you create all the policies correctly, at some point you will start seeing zero traffic being denied by your default-deny staged policy. At that point you can go ahead ane enforce the default-deny policy. Voilà! The vote namespace is now secure.
+4. If you create all the policies correctly, at some point, you will start seeing zero traffic being denied by your default-deny staged policy. At that point, you can go ahead and enforce the default-deny policy. Voilà! The vote namespace is now secure.
 
 ### Bonus - About Tiers
 
