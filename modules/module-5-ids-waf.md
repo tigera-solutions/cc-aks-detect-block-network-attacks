@@ -1,8 +1,8 @@
 # Module 5 - Configuring IDS protection and Workload-Centric WAF
 
-Security teams need to run DPI quickly in response to unusual network traffic in clusters so they can identify potential threats. Also, it is critical to run DPI on select workloads (not all) to efficiently make use of cluster resources and minimize the impact of false positives. Calico Cloud provides an easy way to perform DPI using Snort community rules. You can disable DPI at any time, selectively configure for namespaces and endpoints, and alerts are generated in the Alerts dashboard in Manager UI.
+Security teams need to run DPI quickly in response to unusual network traffic in clusters so they can identify potential threats. Also, it is critical to run DPI on select workloads (not all) to efficiently use cluster resources and minimize the impact of false positives. Calico Cloud provides an easy way to perform DPI using Snort community rules. You can disable DPI at any time, selectively configure for namespaces and endpoints, and alerts are generated in the `Alerts` dashboard in Manager UI.
 
-For this workshop we will enable the IDS for the vote service and observe the alerts being created when trying to expoit some vulnerabilities.
+For this workshop, we will enable the IDS for the vote service and observe the alerts being created when trying to exploit some vulnerabilities.
 
 1. First enable the Intrusion Detection
 
@@ -41,17 +41,17 @@ For this workshop we will enable the IDS for the vote service and observe the al
 
 3. Test the IDS emulating an attack to the vote service:
 
-   - Find the IP address of the vote application
+   - Find the IP address of the vote application and export it to the VOTE_EXTERNAL enviroment variable
 
      ```bash
-     kubectl get svc -n vote 
+     export VOTE_EXTERNAL=$(kubectl get svc -n vote vote-external -o=jsonpath='{.status.loadBalancer.ingress[*].ip}')
      ```
 
-   - From your shell, execute the following commands, substituting the xx.xx.xx.xx for the IP address of the vote application.
+   - From your shell, execute the following commands.
 
      ```bash
-     curl -m2 http://xx.xx.xx.xx./cmd.exe
-     curl -m2 http://xx.xx.xx.xx/NessusTest
+     curl -m2 http://$VOTE_EXTERNAL/cmd.exe
+     curl -m2 http://$VOTE_EXTERNAL/NessusTest
      ```
 
    - Observe the results in the Service Graph. Alerts will be generated warming you about the exploitation attempt.
