@@ -95,7 +95,9 @@ We recommend creating a global default deny policy after you complete writing po
            - =
            - Select Value... `worker`
            - Click on `SAVE LABEL SELECTOR`  
+
            `OR`, click `Add Label Seletor`
+           
            - Select Key... `app`
            - =
            - Select Value... `result`
