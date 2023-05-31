@@ -111,11 +111,11 @@ We recommend creating a global default deny policy after you complete writing po
    
      ![recommend a policy](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/49051f38-af1e-4786-91c4-490367fefcf4)
    
-   - Select the `vote` namespace in the Namespace dropdown and click on the `Recommend` button to get the recommended policy.
+   - Select the `vote` namespace in the Namespace dropdown 
 
      ![select namespace](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/8524b68e-2acc-4f7c-bb5f-8051b001317c)
 
-   - Click in `Advanced Options` and select the `redis-xxxxxxx-*` from the dropdown
+   - Click in `Advanced Options` and select the `redis-xxxxxxx-*` from the dropdown and click on the `Recommend` button to get the recommended policy.
    
      ![workload](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/8a482686-c1ee-43ca-bcd0-05063862e8ff)
    
