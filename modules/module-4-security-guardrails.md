@@ -107,11 +107,11 @@ We recommend creating a global default deny policy after you complete writing po
 
    Let's start with the `redis` database.
 
-   - Click in `Recommend a Policy`
+   - Click on `Recommend a Policy`
    
      ![recommend a policy](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/49051f38-af1e-4786-91c4-490367fefcf4)
    
-   - Select the `vote` namespace in the Namespace dropdown
+   - Select the `vote` namespace in the Namespace dropdown and click on the `Recommend` button to get the recommended policy.
 
      ![select namespace](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/8524b68e-2acc-4f7c-bb5f-8051b001317c)
 
