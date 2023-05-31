@@ -41,7 +41,7 @@ For this workshop, we will enable the IDS for the vote service and observe the a
 
 3. Test the IDS emulating an attack to the vote service:
 
-   - Find the IP address of the vote application and export it to the `VOTE_EXTERNAL` enviroment variable
+   - Find the IP address of the vote application and export it to the `VOTE_EXTERNAL` environment variable
 
      ```bash
      export VOTE_EXTERNAL=$(kubectl get svc -n vote vote-external -o=jsonpath='{.status.loadBalancer.ingress[*].ip}')
@@ -54,26 +54,26 @@ For this workshop, we will enable the IDS for the vote service and observe the a
      curl -m2 http://$VOTE_EXTERNAL/NessusTest
      ```
 
-   - Observe the results in the Service Graph. Alerts will be generated warming you about the exploitation attempt.
+   - Observe the results in the Service Graph to see the generated alerts that will warn you about the exploitation attempt.
 
 ---
 
-A web application firewall (WAF) protects web applications from a variety of application layer attacks such as cross-site scripting (XSS), SQL injection, and cookie poisoning, among others. Given that attacks on apps are the leading cause of breaches, you need to protect the HTTP traffic that provides a gateway to valuable app data.
+A web application firewall (WAF) protects web applications from various application layer attacks, such as cross-site scripting (XSS), SQL injection, and cookie poisoning, among others. Since attacks on apps are the leading cause of breaches, you need to protect the HTTP traffic that provides a gateway to valuable app data.
 
-Calico Cloud WAF allows you to selectively run service traffic within your cluster, and protect intra-cluster traffic from common HTTP-layer attacks such as SQL injection, and cross-site request forgery. To increase protection, you can use Calico Cloud network policies to enforce security controls on selected pods on the host.
+Calico Cloud WAF allows you to selectively run service traffic within your cluster and protect intra-cluster traffic from common HTTP-layer attacks such as SQL injection and cross-site request forgery. To increase protection, you can use Calico Cloud network policies to enforce security controls on selected pods on the host.
 
-1. Deploy the WAF, by running the following command:
+1. Deploy the WAF by running the following command:
 
    ```bash
    kubectl apply -f waf
    ```
 
-2. Start a pod to simulate an attack to the vote service.
+2. Start a pod to simulate an attack on the vote service.
 
    ```bash
    kubectl run attacker --image nicolaka/netshoot -it --rm -- /bin/bash
    ```
-3. Before protecting the service with the WAF, try the following command from the attacker shell. This will simulate an LOG4J attack.
+3. Before protecting the service with the WAF, try the following command from the attacker shell. This request will simulate a LOG4J attack.
 
    ```bash
    curl -v -H \
@@ -81,7 +81,7 @@ Calico Cloud WAF allows you to selectively run service traffic within your clust
      'vote.vote'
    ```
 
-4. Now enable the WAF by using the following command, from your shell (not from the pod attacker).
+4. Now enable the WAF using the following command from your shell (not from the pod attacker).
 
    ```
    kubectl patch applicationlayer tigera-secure --type='merge' -p '{"spec":{"webApplicationFirewall":"Enabled"}}'
@@ -95,7 +95,7 @@ Calico Cloud WAF allows you to selectively run service traffic within your clust
      'vote.vote'
    ```
    
-   You will note that the result will be a HTTP 403 - Forbidden. This returns from the WAF.
+   You will note that the result will be an HTTP 403 - Forbidden. This returns from the WAF.
 
 --- 
 
