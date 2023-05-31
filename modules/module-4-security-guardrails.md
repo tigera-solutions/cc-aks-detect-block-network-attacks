@@ -110,6 +110,23 @@ We recommend that you create a global default deny policy after you complete wri
    - Click in `Recommend a Policy`
    
    <<<IMAGE>>>
+   ![recommend_1](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/49051f38-af1e-4786-91c4-490367fefcf4)
+   
+   ![Screenshot 2023-05-30 at 8 22 45 PM](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/8524b68e-2acc-4f7c-bb5f-8051b001317c)
+   
+   ![Screenshot 2023-05-30 at 8 23 58 PM](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/8a482686-c1ee-43ca-bcd0-05063862e8ff)
+   
+   ![Screenshot 2023-05-30 at 8 25 32 PM](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/94207043-dcc8-45df-a1e9-9f53171502d3)
+   
+   ![Screenshot 2023-05-30 at 8 26 35 PM](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/587fe7c7-d387-44fc-a722-f668b93a5e96)
+
+   ![Screenshot 2023-05-30 at 8 27 33 PM](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/f48b066b-2339-451b-aae5-dd11b76702c7)
+
+   
+
+
+
+
 
 
 
