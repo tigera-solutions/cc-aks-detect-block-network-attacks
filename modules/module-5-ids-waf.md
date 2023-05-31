@@ -4,7 +4,7 @@ Security teams need to run DPI quickly in response to unusual network traffic in
 
 For this workshop, we will enable the IDS for the vote service and observe the alerts being created when trying to exploit some vulnerabilities.
 
-1. First enable the Intrusion Detection
+1. First enable the `Intrusion Detection`
 
    ```yaml
    kubectl apply -f - <<-EOF
@@ -25,7 +25,7 @@ For this workshop, we will enable the IDS for the vote service and observe the a
    EOF
    ```
 
-2. Next, create a deep packet inspection for the vote application in the vote namespace.
+2. Next, create a `DeepPacketInspection` for the vote application in the vote namespace.
 
    ```yaml
    kubectl apply -f - <<-EOF
@@ -41,7 +41,7 @@ For this workshop, we will enable the IDS for the vote service and observe the a
 
 3. Test the IDS emulating an attack to the vote service:
 
-   - Find the IP address of the vote application and export it to the VOTE_EXTERNAL enviroment variable
+   - Find the IP address of the vote application and export it to the `VOTE_EXTERNAL` enviroment variable
 
      ```bash
      export VOTE_EXTERNAL=$(kubectl get svc -n vote vote-external -o=jsonpath='{.status.loadBalancer.ingress[*].ip}')
