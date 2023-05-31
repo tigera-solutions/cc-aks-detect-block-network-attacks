@@ -74,13 +74,42 @@ We recommend that you create a global default deny policy after you complete wri
 2. Based on the application design, the `db` lists on port `5432` and receive connections from the `worker` and the `result` microservices. 
    Let's use the Calico Cloud UI to create a policy to microsegment this traffic.
 
+   - Go to the `Policies Board`
+   - On the bottom of the tier box `platform` click on `Add Policy`
+     - In the `Create Policy` page enter the policy name: `db`
+     - Change the `Scope` from `Global` to `Namespace` and select the namespace `vote`
+     - On the `Applies To` session, click `Add Label Seletor`
+       - Select Key... `app`
+       - =
+       - Select Value... `db`
+       - Click on `SAVE LABEL SELECTOR`
+     - On the field `Type` select the checkbox for Ingress.
+     - Click on `Add Ingress Rule`
+       - On the `Create New Policy Rule` window,
+         - Click on the `dropdown` with `Any Protocol`
+         - Change the radio button to `Protocol is` and select `TCP`
+         - In the field `To:` click in `Add Port` 
+         - `Port is` 5432 - Save
+         - In the field `From:`, click `Add Label Seletor`
+           - Select Key... `app`
+           - =
+           - Select Value... `worker`
+           - Click on `SAVE LABEL SELECTOR`
+           `OR`, click `Add Label Seletor`
+           - Select Key... `app`
+           - =
+           - Select Value... `result`
+           - Click on `SAVE LABEL SELECTOR`
+         - Click on the button `Save Rule`
+     - You are done. Click `Enforce` on the top-right of your page.
+
+3. Now, let's make use of the Recommend a Policy to create the policies for the other workloads.
+
+   Let's start with the `redis` database.
+
+   - Click in `Recommend a Policy`
    
-
-
-
-
-
-
+   <<<IMAGE>>>
 
 
 
