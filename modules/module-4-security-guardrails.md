@@ -135,6 +135,20 @@ We recommend that you create a global default deny policy after you complete wri
 
 4. If you create all the policies correctly, at some point you will start seeing zero traffic being denied by your default-deny staged policy. At that point you can go ahead ane enforce the default-deny policy. Voilà! The vote namespace is now secure.
 
+### About Tiers
+
+Policies are processed in sequential order from top to bottom.
+
+![policy-processing](https://user-images.githubusercontent.com/104035488/206433417-0d186664-1514-41cc-80d2-17ed0d20a2f4.png)
+
+Two mechanisms drive how traffic is processed across tiered policies:
+
+- Labels and selectors
+- Policy action rules
+
+For more information about tiers, please refer to the Calico Cloud documentation [Understanding policy tiers](https://docs.calicocloud.io/get-started/tutorials/policy-tiers)
+
+
 --- 
 
 [:arrow_right: Module 5 - Identity-aware Microsegmentation](/modules/module-5-identity-aware-microsegmentation.md)  <br>
