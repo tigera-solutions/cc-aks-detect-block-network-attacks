@@ -1,8 +1,8 @@
 # Module 4 - Security Guardrails for Network-based Threats
 
-Calico provides methods to enable fine-grained access controls between your microservices and external databases, cloud services, APIs, and other applications that are protected behind a firewall. You can enforce controls from within the cluster using DNS egress policies, from a firewall outside the cluster using the egress gateway. Controls are applied on a fine-grained, per-pod basis.
+Calico provides methods to enable fine-grained access controls between your microservices and external databases, cloud services, APIs, and other applications that are protected by a firewall. You can enforce controls from within the cluster using DNS egress policies from a firewall outside the cluster using the egress gateway. Controls are applied on a fine-grained, per-pod basis.
 
-In this module, we will learn how to use Calico to create network policies to control access to and from a pod. For this, we will install two example application stacks: The Online Boutique and the Dev environment. Once the applications are deployed, we will create and test network security policies with different ingress and egress rules to demonstrate how the **workload access control** is done.
+In this module, we will learn how to use Calico to create network policies to control access to and from a pod. We will install two example application stacks: The Example Voting Application and the WordPress Application. Once the applications are deployed, we will create and test network security policies with different ingress and egress rules to demonstrate how the **workload access control** is done.
 
 1. Installing the example application stacks:
 
@@ -50,13 +50,13 @@ Calico Security Policies provide a richer set of policy capabilities than the na
 
 ### The Zero Trust approach
 
-A global default deny policy ensures that unwanted traffic (ingress and egress) is denied by default. Pods without policy (or incorrect policy) are not allowed traffic until appropriate network policy is defined. Although the staging policy tool will help you find incorrect and missing policy, a global deny helps mitigate against other lateral malicious attacks.
+A global default deny policy ensures that unwanted traffic (ingress and egress) is denied by default. Pods without policy (or incorrect policy) are not allowed traffic until the appropriate network policy is defined. Although the staging policy tool will help you find the incorrect or the missing policy, a global deny policy helps mitigate other lateral malicious attacks.
 
 By default, all traffic is allowed between the pods in a cluster. Let's start by testing connectivity between application components and across application stacks. All of these tests should succeed as there are no policies in place.
 
-We recommend that you create a global default deny policy after you complete writing policy for the traffic that you want to allow. Use the stage policy feature to get your allowed traffic working as expected, then lock down the cluster to block unwanted traffic.
+We recommend creating a global default deny policy after you complete writing policy for the traffic you want to allow. Use the stage policy feature to get your allowed traffic working as expected, then lock down the cluster to block unwanted traffic.
 
-1. Create a staged global default deny policy. It will shows all the traffic that would be blocked if it were converted into a deny.
+1. Create a staged global default-deny policy. It will show all the traffic that would be blocked if it were enforced.
 
    - Go to the `Policies Board`
    - On the bottom of the tier box `default` click on `Add Policy`
@@ -69,7 +69,7 @@ We recommend that you create a global default deny policy after you complete wri
      - On the field `Type` select both checkboxes: Ingress and Egress.
      - You are done. Click `Stage` on the top-right of your page.
 
-   The staged policy does not affect the traffic directly but allows you to view the policy impact if it were to be enforced. You can see the deny traffic in staged policy.
+   The staged policy does not affect the traffic directly but allows you to view the policy impact if it were to be enforced. You can see the denied traffic in staged policy.
 
 2. Based on the application design, the `db` lists on port `5432` and receive connections from the `worker` and the `result` microservices. 
    Let's use the Calico Cloud UI to create a policy to microsegment this traffic.
@@ -88,13 +88,13 @@ We recommend that you create a global default deny policy after you complete wri
        - On the `Create New Policy Rule` window,
          - Click on the `dropdown` with `Any Protocol`
          - Change the radio button to `Protocol is` and select `TCP`
-         - In the field `To:` click in `Add Port` 
+         - In the field `To:` click on `Add Port` 
          - `Port is` 5432 - Save
          - In the field `From:`, click `Add Label Seletor`
            - Select Key... `app`
            - =
            - Select Value... `worker`
-           - Click on `SAVE LABEL SELECTOR`
+           - Click on `SAVE LABEL SELECTOR`  
            `OR`, click `Add Label Seletor`
            - Select Key... `app`
            - =
