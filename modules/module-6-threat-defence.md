@@ -16,11 +16,11 @@ Our threat detection engine also monitors activity within the containers running
 
 2. If it is not enabled, you will see a page like this:
 
-   --- IMAGE ---
+   ![enable container threat detection](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/463d0d01-5868-47a6-acfc-f75fe0c3a4fc)
 
    Click on the Enable Container Threat Detection button, and you will see the following page:
 
-   --- IMAGE ---
+   ![ctd running](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/4d37b974-bdf2-4f97-a4a7-31f5b43b3b22)
  
    Perfect! Now any suspicious activities will generate an alert. Let's try some.
 
