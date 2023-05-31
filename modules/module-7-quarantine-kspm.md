@@ -1,10 +1,10 @@
 # Module 7 - Quarantine a Worload and KSPM
 
-If you have a compromised workload in your environment and want to conduct futher investigation on it, you may want not to terminate the workload but isolate it, so it will not be able to cause damage, or spread laterally across your environment. In this situation you may want to quarantine the pod by applying a security policy to it that will deny all the egress and ingress traffic, but will also log all the communications attempts from and to that pod.
+Suppose you have a compromised workload in your environment and want to conduct further investigation on it. In that case, you should not terminate the workload but isolate it, so it will not be able to cause damage or spread laterally across your environment. In this situation, you should quarantine the pod by applying a security policy to it that will deny all the egress and ingress traffic and log all the communications attempts from and to that pod.
 
 We have the `quarantine` policy created in the `security` tier. This policy has a label selector of `quarantine = true`. Let's see how it works.
 
-1. Execute the following commands from the attacker pod (if you quitted from its shell, it got deleted. Just create it again, if it's the case.)
+1. Execute the following commands from the attacker pod (if you did quit from its shell, it got deleted. Create it again if it's the case.).
 
    - Test the connection to a local service
 
@@ -12,13 +12,13 @@ We have the `quarantine` policy created in the `security` tier. This policy has 
      curl -m3 http://vote.vote
      ```
 
-   - Test the connectivity with the kubernetes API
+   - Test the connectivity with the Kubernetes API
 
      ```bash
      curl -m3 -k https://kubernetes:6443/versions
      ```  
 
-   - Test the connectivity with internet
+   - Test the connectivity with the internet
 
      ```bash
      curl -m3 http://neverssl.com
@@ -30,7 +30,7 @@ We have the `quarantine` policy created in the `security` tier. This policy has 
    kubectl label pod attacker quarantine=true
    ```
 
-3. Repeat the tests from step 1. Now, as you can see, the pod is not able to establish communication with any of the destinations.
+3. Repeat the tests from step 1. Now, as you can see, the cannot establish communication with any of the destinations.
 
 
 # Visualize security posture of your Kubernetes cluster 
