@@ -109,155 +109,31 @@ We recommend that you create a global default deny policy after you complete wri
 
    - Click in `Recommend a Policy`
    
-   <<<IMAGE>>>
-   ![recommend_1](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/49051f38-af1e-4786-91c4-490367fefcf4)
+     ![recommend a policy](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/49051f38-af1e-4786-91c4-490367fefcf4)
    
-   ![Screenshot 2023-05-30 at 8 22 45 PM](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/8524b68e-2acc-4f7c-bb5f-8051b001317c)
+   - Select the `vote` namespace in the Namespace dropdown
+
+     ![select namespace](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/8524b68e-2acc-4f7c-bb5f-8051b001317c)
+
+   - Click in `Advanced Options` and select the `redis-xxxxxxx-*` from the dropdown
    
-   ![Screenshot 2023-05-30 at 8 23 58 PM](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/8a482686-c1ee-43ca-bcd0-05063862e8ff)
+     ![workload](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/8a482686-c1ee-43ca-bcd0-05063862e8ff)
    
-   ![Screenshot 2023-05-30 at 8 25 32 PM](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/94207043-dcc8-45df-a1e9-9f53171502d3)
+   - Note that the selector and the rules are already present!
+
+     ![review the policy](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/94207043-dcc8-45df-a1e9-9f53171502d3)
    
-   ![Screenshot 2023-05-30 at 8 26 35 PM](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/587fe7c7-d387-44fc-a722-f668b93a5e96)
+   - Click on the Enforce button
 
-   ![Screenshot 2023-05-30 at 8 27 33 PM](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/f48b066b-2339-451b-aae5-dd11b76702c7)
-
+     ![enforce](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/587fe7c7-d387-44fc-a722-f668b93a5e96)
    
+   - By default, all the recommended policies are create in the `default` tier. You can drag and drop a policy to reorganize in the same tier or in another tier. Move the policy to the platform tier.
 
+     ![move the policy](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/f48b066b-2339-451b-aae5-dd11b76702c7)
 
+   Great! You just created a recommended policy. Easy, right? Now go ahead and create policies for all the other workloads in the vote namespace.
 
-
-
-
-
-
-First, let's install `curl` in the loadgenerator pod for these tests.
-
-```bash
-kubectl exec -it $(kubectl get po -l app=loadgenerator -ojsonpath='{.items[0].metadata.name}') -c main -- sh -c 'apt-get update && apt install curl -y'
-```
-
-a. Test connectivity between workloads within each namespace, use dev and default namespaces as example
-
-   ```bash
-   # test connectivity within dev namespace, the expected result is "HTTP/1.1 200 OK" 
-   kubectl -n dev exec -t centos -- sh -c 'curl -m3 -sI http://nginx-svc 2>/dev/null | grep -i http'
-   ```
-
-   ```bash
-   # test connectivity within default namespace in 8080 port
-   kubectl exec -it $(kubectl -n default get po -l app=frontend -ojsonpath='{.items[0].metadata.name}') \
-   -c server -- sh -c 'nc -zv recommendationservice 8080'
-   ```
-
-b. Test connectivity across namespaces dev/centos and default/frontend.
-
-   ```bash
-   # test connectivity from dev namespace to default namespace, the expected result is "HTTP/1.1 200 OK"
-   kubectl -n dev exec -t centos -- sh -c 'curl -m3 -sI http://frontend.default 2>/dev/null | grep -i http'
-   ```
-
-c. Test connectivity from each namespace dev and default to the Internet.
-
-   ```bash
-   # test connectivity from dev namespace to the Internet, the expected result is "HTTP/1.1 200 OK"
-   kubectl -n dev exec -t centos -- sh -c 'curl -m3 -sI http://www.google.com 2>/dev/null | grep -i http'
-   ```
-
-   ```bash
-   # test connectivity from default namespace to the Internet, the expected result is "HTTP/1.1 200 OK"
-   kubectl exec -it $(kubectl get po -l app=loadgenerator -ojsonpath='{.items[0].metadata.name}') \
-   -c main -- sh -c 'curl -m3 -sI http://www.google.com 2>/dev/null | grep -i http'
-   ```
-
-We recommend that you create a global default deny policy after you complete writing policy for the traffic that you want to allow. Use the stage policy feature to get your allowed traffic working as expected, then lock down the cluster to block unwanted traffic.
-
-1. Create a staged global default deny policy. It will shows all the traffic that would be blocked if it were converted into a deny.
-
-   ```yaml
-   kubectl apply -f - <<-EOF
-   apiVersion: projectcalico.org/v3
-   kind: StagedGlobalNetworkPolicy
-   metadata:
-     name: default-deny
-   spec:
-     order: 2000
-     selector: "projectcalico.org/namespace in {'dev','default'}"
-     types:
-     - Ingress
-     - Egress
-   EOF
-   ```
-
-   The staged policy does not affect the traffic directly but allows you to view the policy impact if it were to be enforced. You can see the deny traffic in staged policy.
-
-2. Create a network policy to allow the traffic shown as blocked (staged) in step 1, from the centos pod to the nginx in the same namespace.
-  
-   ```yaml
-   kubectl apply -f - <<-EOF   
-   apiVersion: projectcalico.org/v3
-   kind: NetworkPolicy
-   metadata:
-     name: default.centos
-     namespace: dev
-   spec:
-     tier: default
-     order: 800
-     selector: app == "centos"
-     egress:
-     - action: Allow
-       protocol: UDP
-       destination:
-         selector: k8s-app == "kube-dns"
-         namespaceSelector: kubernetes.io/metadata.name == "kube-system" 
-         ports:
-         - '53'
-     - action: Allow
-       protocol: TCP
-       destination:
-         selector: app == "nginx"
-     types:
-       - Egress
-   EOF
-   ```
-
-3. Test connectivity with the policy in place.
-
-   a. The only connections between the components within namespaces dev are from centos to nginx, which should be allowed as configured by the policies.
-
-   ```bash
-   # test connectivity within dev namespace, the expected result is "HTTP/1.1 200 OK"
-   kubectl -n dev exec -t centos -- sh -c 'curl -m3 -sI http://nginx-svc 2>/dev/null | grep -i http'
-   ```
-   
-   The connections within namespace default should be allowed as usual.
-   
-   ```bash
-   # test connectivity within default namespace in 8080 port
-   kubectl exec -it $(kubectl get po -l app=frontend -ojsonpath='{.items[0].metadata.name}') \
-   -c server -- sh -c 'nc -zv recommendationservice 8080'
-   ``` 
-
-   b. The connections across dev/centos pod and default/frontend pod should be blocked by the application policy.
-   
-   ```bash   
-   # test connectivity from dev namespace to default namespace, the expected result is "command terminated with exit code 1"
-   kubectl -n dev exec -t centos -- sh -c 'curl -m3 -sI http://frontend.default 2>/dev/null | grep -i http'
-   ```
-
-   c. Test connectivity from each namespace dev and default to the Internet.
-   
-   ```bash   
-   # test connectivity from dev namespace to the Internet, the expected result is "command terminated with exit code 1"
-   kubectl -n dev exec -t centos -- sh -c 'curl -m3 -sI http://www.google.com 2>/dev/null | grep -i http'
-   ```
-   
-   ```bash
-   # test connectivity from default namespace to the Internet, the expected result is "HTTP/1.1 200 OK"
-   kubectl exec -it $(kubectl get po -l app=loadgenerator -ojsonpath='{.items[0].metadata.name}') \
-   -c main -- sh -c 'curl -m3 -sI http://www.google.com 2>/dev/null | grep -i http'
-   ```
-
+4. If you create all the policies correctly, at some point you will start seeing zero traffic being denied by your default-deny staged policy. At that point you can go ahead ane enforce the default-deny policy. Voilà! The vote namespace is now secure.
 
 --- 
 
