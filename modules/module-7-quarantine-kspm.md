@@ -1,4 +1,6 @@
-# Module 7 - Quarantine a Worload and KSPM
+# Module 7 - Quarantine a Workload and KSPM
+
+## Quarantine a Workload
 
 Suppose you have a compromised workload in your environment and want to conduct further investigation on it. In that case, you should not terminate the workload but isolate it, so it will not be able to cause damage or spread laterally across your environment. In this situation, you should quarantine the pod by applying a security policy to it that will deny all the egress and ingress traffic and log all the communications attempts from and to that pod.
 
@@ -15,7 +17,7 @@ We have the `quarantine` policy created in the `security` tier. This policy has 
    - Test the connectivity with the Kubernetes API
 
      ```bash
-     curl -m3 -k https://kubernetes:6443/versions
+     curl -m3 -k https://kubernetes:443/versions
      ```  
 
    - Test the connectivity with the internet
@@ -32,11 +34,12 @@ We have the `quarantine` policy created in the `security` tier. This policy has 
 
 3. Repeat the tests from step 1. Now, as you can see, the cannot establish communication with any of the destinations.
 
+---
 
-# Visualize security posture of your Kubernetes cluster 
+## Visualize security posture of your Kubernetes cluster 
 
 
-## Timeline
+### Timeline
 
 What changed, who did it, and when? This information is critical for security. Native Kubernetes doesn’t provide an easy way to capture audit logs for pods, namespaces, service accounts, network policies, and endpoints. The Calico Cloud timeline provides audit logs for all changes to network policy and other resources associated with your Calico Cloud deployment.
 
@@ -44,7 +47,7 @@ What changed, who did it, and when? This information is critical for security. N
 
 ![timeline](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/89b4ab3b-968a-4041-9a2b-1d8522fb7a41)
 
-## Compliance Reports
+### Compliance Reports
 
 Continuous compliance means employing a continual audit that shows what traffic was allowed in your infrastructure,
 what traffic was denied and why, and logs of who was trying to change what and whether those changes went into
