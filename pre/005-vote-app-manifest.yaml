@@ -158,6 +158,8 @@ metadata:
     app: vote
   name: vote
   namespace: vote
+  annotations:
+    projectcalico.org/l7-logging: 'true'
 spec:
   type: ClusterIP
   ports:
@@ -174,6 +176,8 @@ metadata:
     app: vote
   name: vote-external
   namespace: vote
+  annotations:
+    projectcalico.org/l7-logging: 'true'
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
@@ -215,6 +219,8 @@ metadata:
     app: result
   name: result
   namespace: vote
+  annotations:
+    projectcalico.org/l7-logging: 'true'
 spec:
   type: ClusterIP
   ports:
@@ -231,6 +237,8 @@ metadata:
     app: result
   name: result-external
   namespace: vote
+  annotations:
+    projectcalico.org/l7-logging: 'true'
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local

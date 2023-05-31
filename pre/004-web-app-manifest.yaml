@@ -89,6 +89,8 @@ metadata:
   labels:
     app: wordpress
   namespace: wordpress
+  annotations:
+    projectcalico.org/l7-logging: 'true'
 spec:
   ports:
   - name: "wordpress-service"
@@ -107,6 +109,8 @@ metadata:
   labels:
     app: wordpress
   namespace: wordpress
+  annotations:
+    projectcalico.org/l7-logging: 'true'
 spec:
   ports:
   - name: "wordpress-service"

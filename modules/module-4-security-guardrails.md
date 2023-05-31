@@ -135,7 +135,11 @@ We recommend that you create a global default deny policy after you complete wri
 
 4. If you create all the policies correctly, at some point you will start seeing zero traffic being denied by your default-deny staged policy. At that point you can go ahead ane enforce the default-deny policy. Voilà! The vote namespace is now secure.
 
-### About Tiers
+### Bonus - About Tiers
+
+Tiers are a hierarchical construct used to group policies and enforce higher precedence policies that other teams cannot circumvent, providing the basis for **Identity-aware microsegmentation**. 
+
+All Calico and Kubernetes security policies reside in tiers. You can start “thinking in tiers” by grouping your teams and the types of policies within each group such as security, platform, etc.
 
 Policies are processed in sequential order from top to bottom.
 
@@ -151,7 +155,7 @@ For more information about tiers, please refer to the Calico Cloud documentation
 
 --- 
 
-[:arrow_right: Module 5 - Identity-aware Microsegmentation](/modules/module-5-identity-aware-microsegmentation.md)  <br>
+[:arrow_right: Module 5 - Configuring IDS protection ans Workload-Centric WAF](/modules/module-5-ids-waf.md)  <br>
 
 [:arrow_left: Module 3 - Connect the AWS EKS cluster to Calico Cloud](/modules/module-3-connect-calicocloud.md)  
 [:leftwards_arrow_with_hook: Back to Main](/README.md)  
