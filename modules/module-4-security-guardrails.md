@@ -103,7 +103,7 @@ We recommend creating a global default deny policy after you complete writing po
          - Click on the button `Save Rule`
      - You are done. Click `Enforce` on the top-right of your page.
 
-3. Now, let's make use of the Recommend a Policy to create the policies for the other workloads.
+3. Now, let's make use of the **Recommend a Policy** feature to create the policies for the other workloads.
 
    Let's start with the `redis` database.
 
