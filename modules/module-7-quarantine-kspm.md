@@ -49,12 +49,7 @@ What changed, who did it, and when? This information is critical for security. N
 
 ### Compliance Reports
 
-Continuous compliance means employing a continual audit that shows what traffic was allowed in your infrastructure,
-what traffic was denied and why, and logs of who was trying to change what and whether those changes went into
-effect. Continuous compliance gives teams the ability to pinpoint any point in time and say with reasonable certainty
-whether the organization was in compliance—and provide documentation to prove it. Calico’s compliance reports
-visually describe the security controls in place in an easy-to-understand policy view. Calico also shows all workloads
-that are in-scope and out-of-scope with your policy.
+Continuous compliance means employing a continual audit that shows what traffic was allowed in your infrastructure, what traffic was denied and why, and logs of who was trying to change what and whether those changes went into effect. Continuous compliance allows teams to pinpoint any point in time, say with reasonable certainty, whether the organization was compliant, and provide documentation to prove it. Calico’s compliance reports visually describe the security controls in place in an easy-to-understand policy view. Calico also shows all workloads that are in-scope and out-of-scope with your policy.
 
 1. On the Calico Cloud GUI, navigate to `Compliance`.
 
@@ -64,6 +59,9 @@ that are in-scope and out-of-scope with your policy.
 2. Explore the Compliance Reports.
 
 ![cis-benchmark](https://user-images.githubusercontent.com/104035488/192358645-ab77c305-0a9d-4242-b37f-972dc22b4d84.gif)
+
+
+**Congratulations! You completed this workshop!**
 
 --- 
 
