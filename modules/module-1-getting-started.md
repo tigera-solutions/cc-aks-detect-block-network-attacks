@@ -20,8 +20,8 @@ The following are the basic requirements to **start** the workshop.
 4. Once your cloud shell is started, clone the workshop repo into the cloud shell environment
 
    ```bash
-   git clone https://github.com/tigera-solutions/cc-aks-zero-trust-workshop.git && \
-   cd cc-aks-zero-trust-workshop
+   git clone https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks.git && \
+   cd cc-aks-detect-block-network-attacks
    ```
 
    > Note: In the cloud shell, you are automatically logged into your Azure subscription.
