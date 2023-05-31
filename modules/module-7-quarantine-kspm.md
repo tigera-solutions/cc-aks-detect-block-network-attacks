@@ -42,8 +42,7 @@ What changed, who did it, and when? This information is critical for security. N
 
 1. On the Calico Cloud GUI, navigate to `Activity` and explore the entries in the `Timeline`.
 
---- IMAGE GIF ---
-
+![timeline](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/89b4ab3b-968a-4041-9a2b-1d8522fb7a41)
 
 ## Compliance Reports
 
