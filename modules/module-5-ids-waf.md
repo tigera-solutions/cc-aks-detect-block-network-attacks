@@ -58,9 +58,9 @@ For this workshop, we will enable the IDS for the vote service and observe the a
 
 ---
 
-A web application firewall (WAF) protects web applications from various application layer attacks, such as cross-site scripting (XSS), SQL injection, and cookie poisoning, among others. Since attacks on apps are the leading cause of breaches, you need to protect the HTTP traffic that provides a gateway to valuable app data.
+A web application firewall (WAF) safeguards web applications against a range of application layer attacks, including cross-site scripting (XSS), SQL injection, and cookie poisoning. Given that application attacks are the primary cause of breaches, protecting the HTTP traffic that serves as a gateway to valuable application data is crucial.
 
-Calico Cloud WAF allows you to selectively run service traffic within your cluster and protect intra-cluster traffic from common HTTP-layer attacks such as SQL injection and cross-site request forgery. To increase protection, you can use Calico Cloud network policies to enforce security controls on selected pods on the host.
+Calico Cloud WAF allows you to selectively run service traffic within your cluster and protect intra-cluster traffic from common HTTP-layer attacks. To increase protection, you can use Calico Cloud network policies to enforce security controls on selected pods on the host.
 
 1. Deploy the WAF by running the following command:
 
