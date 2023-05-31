@@ -12,6 +12,8 @@ In this module, we will learn how to use Calico to create network policies to co
    ```
 
 Included in the `pre` there folder are two applications that will be used in the exercises during the workshop. The diagram below shows how the elements of each application communicate between themselves.
+![applications](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/797670d6-7b17-43d5-a48a-403a6bb551b7)
+![cc-aks-detect-block-network-attacks](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/707446a4-8871-4e63-8de0-c6fba7497589)
 
 ![applications](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/842088b1-320c-4ada-8905-10d1dd02c57c)
 
