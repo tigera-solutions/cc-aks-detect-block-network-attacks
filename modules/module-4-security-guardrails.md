@@ -109,28 +109,28 @@ We recommend creating a global default deny policy after you complete writing po
    Let's start with the `redis` database.
 
    - Click on `Recommend a Policy`
-   
-     ![recommend a policy](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/49051f38-af1e-4786-91c4-490367fefcf4)
+     
+     ![recommend](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/328a7010-e008-49d1-bb6e-751c2ecdf413)
    
    - Select the `vote` namespace in the Namespace dropdown 
-
-     ![select namespace](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/8524b68e-2acc-4f7c-bb5f-8051b001317c)
+     
+     ![select namespace](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/bb4bf93d-f1fc-425a-b5ca-7a53dcc53f85)
 
    - Click in `Advanced Options` and select the `redis-xxxxxxx-*` from the dropdown and click on the `Recommend` button to get the recommended policy.
-   
-     ![workload](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/8a482686-c1ee-43ca-bcd0-05063862e8ff)
-   
+
+     ![workload](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/131fe2ce-d53e-4858-8128-23caef8ca6ac)
+ 
    - Note that the selector and the rules are already present!
 
-     ![review the policy](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/94207043-dcc8-45df-a1e9-9f53171502d3)
+     ![review the policy](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/05c16863-ff65-462d-b900-e67f82e47c32)
    
    - Click on the Enforce button
 
-     ![enforce](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/587fe7c7-d387-44fc-a722-f668b93a5e96)
-   
-   - By default, all the recommended policies are create in the `default` tier. You can drag and drop a policy to reorganize in the same tier or in another tier. Move the policy to the platform tier.
+     ![enforce](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/5958c64e-9fc8-49ff-b5e0-64cb31465b3f)
 
-     ![move the policy](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/f48b066b-2339-451b-aae5-dd11b76702c7)
+   - By default, all the recommended policies are create in the `default` tier. You can drag and drop a policy to reorganize in the same tier or in another tier. Move the policy to the platform tier.
+     
+     ![move](https://github.com/tigera-solutions/cc-aks-detect-block-network-attacks/assets/104035488/fca4eefd-dd1a-4497-a242-13de99755929)
 
    Great! You just created a recommended policy. Easy, right? Now go ahead and create policies for all the other workloads in the vote namespace.
 
