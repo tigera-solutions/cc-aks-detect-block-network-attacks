@@ -6,7 +6,7 @@ In this AKS-focused workshop, you will work with Microsoft Azure and Calico Clou
 
 Cloud-native applications require a modern approach based on the zero-trust principles of identity-based access, least privilege access, and proactively detecting threats and reducing the blast radius in case of a breach.
 
-Calico Cloud enables fine-grained, zero-trust workload access controls between your microservices and external databases, cloud services, APIs, and other applications. It also prevents the lateral movement of threats with identity-aware segmentation that works across all of your workload environments, including hosts, VMs, Kubernetes components, and services.
+Calico Cloud enables fine-grained, zero-trust workload access controls between your microservices and external databases, cloud services, APIs, and other applications. It also prevents the lateral movement of threats with identity-aware segmentation that works across your workload environments, including hosts, VMs, Kubernetes components, and services.
 
 You will come away from this workshop with an understanding of how others in your industry are securing and observing cloud-native applications in Microsoft Azure, along with best practices that you can implement in your organization.
 
@@ -28,7 +28,7 @@ The estimated time to complete this workshop is 60-90 minutes.
 2. Configure IDS/IPS, workload-centric WAF, and DDoS protection
 3. Detect zero-day attacks based on suspicious container activity using syscalls, file access, and process information 
 4. Preview and enforce security policies to quarantine infected workloads
-5. Visualize security posture of your Kubernetes cluster 
+5. Visualize the security posture of your Kubernetes cluster 
 
 ## Modules
 
@@ -61,4 +61,4 @@ Module 8 - [Clean up](/modules/module-8-clean-up.md)
 - [Github](https://github.com/tigera-solutions/)
 - [Discuss](https://discuss.projectcalico.tigera.io/)
 
-> **Note**: The examples and sample code provided in this workshop are intended to be consumed as instructional content. These will help you understand how Calico Cloud can be configured to build a functional solution. These examples are not intended for use in production environments.
+> **Note**: The workshop provides examples and sample code as instructional content for you to consume. These examples will help you understand how to configure Calico Cloud and build a functional solution. Please note that these examples are not suitable for use in production environments.
