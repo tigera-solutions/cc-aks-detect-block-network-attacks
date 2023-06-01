@@ -37,7 +37,6 @@ spec:
   reportType: policy-audit
   schedule:  '*/30 * * * *'
   endpoints:
-    serviceAccounts: {}
     namespaces:
       names:
         - vote
