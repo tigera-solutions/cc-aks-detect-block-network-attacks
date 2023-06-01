@@ -1,4 +1,4 @@
-# Microsoft Azure: Hands-on AKS workshop </br> Implementing zero-trust security for containers
+# Microsoft Azure: Hands-on AKS workshop </br> Detect and block container and network-based attacks in AKS
 
 ## Welcome
 
