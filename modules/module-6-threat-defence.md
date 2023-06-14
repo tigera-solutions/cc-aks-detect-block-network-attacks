@@ -1,4 +1,4 @@
-# Module 6 - Realtime Container Thread Defence
+# Module 6 - Realtime Container Threat Defence
 
 Calico Cloud provides a threat detection engine that analyzes observed file and process activity to detect known malicious and suspicious activity.
 
